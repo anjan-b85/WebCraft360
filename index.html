@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Meta Tags -->
     <title>WebCraft 360 Studios | Professional Website Development for All Businesses</title>
     <meta name="description" content="WebCraft 360 Studios builds custom, high-performance websites for every type of business. From e-commerce to startups, we deliver world-class digital experiences.">
     <meta name="keywords" content="website development, custom websites, web design, e-commerce development, small business websites, corporate web development, SEO">
     <meta name="author" content="WebCraft 360 Studios">
-    <!-- Open Graph / Social Media -->
     <meta property="og:title" content="WebCraft 360 Studios – Websites for Every Business">
     <meta property="og:description" content="Custom, high-performance websites tailored for any industry.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="#">
     <meta property="og:image" content="BG-Anjan">
-    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -268,7 +265,7 @@
 
         /* Hero Section */
         .hero {
-          background: linear-gradient(135deg, rgba(11,30,51,0.7), rgba(11,30,51,0.6)), url('backgrounds/BG4.jpg') center/cover no-repeat;
+          background: linear-gradient(135deg, rgba(11,30,51,0.7), rgba(11,30,51,0.6)), url('Resources/backgrounds/BG3.jpg') center/cover no-repeat;
           min-height: 100vh;
           display: flex;
           align-items: center;
@@ -279,7 +276,7 @@
         }
 
         body.dark-theme .hero {
-          background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.6)), url('backgrounds/BG4.jpg') center/cover no-repeat;
+          background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.6)), url('Resources/backgrounds/BG3.jpg') center/cover no-repeat;
         }
 
         .hero::after {
@@ -824,7 +821,6 @@
     </style>
 </head>
 <body>
-<!-- Navigation -->
 <nav class="navbar" id="navbar">
     <div class="container nav-container">
         <a href="#" class="logo">WebCraft 360<span>.</span></a>
@@ -841,7 +837,6 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero" id="home">
     <div class="container hero-content">
         <h1>We Build Websites That Grow Your Business</h1>
@@ -856,7 +851,6 @@
     </div>
 </section>
 
-<!-- Services Section -->
 <section id="services">
     <div class="container">
         <h2 class="section-title">Our Expertise</h2>
@@ -896,7 +890,6 @@
     </div>
 </section>
 
-<!-- About Section -->
 <section class="about" id="about">
     <div class="container">
         <h2 class="section-title">Crafting Digital Excellence</h2>
@@ -913,13 +906,12 @@
                 </ul>
             </div>
             <div class="about-image fade-in">
-                <img src="backgrounds/BG5.png" alt="Team working together">
+                <img src="Resources/backgrounds/BG5.png" alt="Team working together">
             </div>
         </div>
     </div>
 </section>
 
-<!-- Contact Section -->
 <section class="contact" id="contact">
     <div class="container">
         <h2 class="section-title">Let’s Build Something Great</h2>
@@ -931,7 +923,7 @@
                 <ul class="contact-details">
                     <li><i class="fas fa-envelope"></i> hello@webcraft360studios.com</li>
                     <li><i class="fas fa-phone-alt"></i> +91 0000000000</li>
-                    <li><i class="fas fa-map-marker-alt"></i> 123 Business Ave, WB, India/li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Business Ave, WB, India</li>
                 </ul>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -940,17 +932,19 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Email Address" required>
-                <textarea rows="5" placeholder="Tell us about your project..." required></textarea>
+
+            <form class="contact-form" id="contactForm">
+                <input type="text" id="contactName" placeholder="Your Name" required>
+                <input type="tel" id="contactPhone" placeholder="Phone Number with ISD code" required>
+                <input type="email" id="contactEmail" placeholder="Email Address" required>
+                <textarea id="contactProject" rows="5" placeholder="Tell us about your project..." required></textarea>
                 <button type="submit" class="btn btn-primary">Send Message</button>
             </form>
+
         </div>
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
     <div class="container footer-content">
         <p>WebCraft 360 Studios – Creating websites for every business.</p>
@@ -959,17 +953,14 @@
             <a href="#">Terms of Service</a>
             <a href="#contact">Contact</a>
         </div>
-        <!-- Visitor Counter -->
         <div class="visitor-counter">Visitors: <span id="counter">...</span></div>
     </div>
 </footer>
 
-<!-- Floating Theme Toggle Button (Bottom Right) -->
 <div class="theme-toggle-float" id="themeToggleFloat" aria-label="Toggle theme">
     <i class="fas fa-sun"></i>
 </div>
 
-<!-- JavaScript -->
 <script>
     // Mobile menu toggle
     const hamburger = document.getElementById('hamburger');
@@ -1063,6 +1054,40 @@
         localStorage.setItem('visitorCount', count);
         counterElement.textContent = count;
       });
+
+    // NEW LOGIC: Send data to the backend server instead of triggering a download
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Prevent page reload
+
+        // Gather the data from the form
+        const formData = {
+            name: document.getElementById('contactName').value,
+            phone: document.getElementById('contactPhone').value,
+            email: document.getElementById('contactEmail').value,
+            project: document.getElementById('contactProject').value
+        };
+
+        try {
+            // Send the data to your Node.js backend
+            const response = await fetch('http://localhost:3000/save-contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                alert("Thank you! Your message has been sent and saved.");
+                this.reset(); // Clear the form
+            } else {
+                alert("Oops! Something went wrong on the server.");
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("Could not connect to the server. Make sure your Node.js server is running!");
+        }
+    });
 </script>
 </body>
 </html>
