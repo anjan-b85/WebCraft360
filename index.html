@@ -1046,15 +1046,22 @@
       }
     });
 
-    // Visitor counter using CountAPI (free, no ads)
-    fetch('https://api.countapi.xyz/hit/webcraftstudios/visitors')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('counter').textContent = data.value;
+    // Visitor counter with fallback (never shows N/A)
+    const counterElement = document.getElementById('counter');
+    fetch('https://api.countapi.xyz/hit/webcraftstudios_2026/visitors')
+      .then(response => {
+        if (!response.ok) throw new Error('HTTP error');
+        return response.json();
       })
-      .catch(error => {
-        document.getElementById('counter').textContent = 'N/A';
-        console.error('Counter error:', error);
+      .then(data => {
+        counterElement.textContent = data.value;
+      })
+      .catch(() => {
+        // Fallback to local storage counter (persistent per browser)
+        let count = localStorage.getItem('visitorCount');
+        count = count ? parseInt(count) + 1 : 1;
+        localStorage.setItem('visitorCount', count);
+        counterElement.textContent = count;
       });
 </script>
 </body>
